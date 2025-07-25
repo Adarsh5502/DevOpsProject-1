@@ -1,28 +1,31 @@
 import React, { useState } from 'react'
 import Header from './components/Header'
-import MatchList from './components/MatchList'
+import TrainList from './components/TrainList'
 
 const App = () => {
-  const [matches, setMatches] = useState([])
-  const [teamA, setTeamA] = useState('')
-  const [teamB, setTeamB] = useState('')
+  const [trainNumber, setTrainNumber] = useState('')
+  const [fromStation, setFromStation] = useState('')
+  const [toStation, setToStation] = useState('')
+  const [tickets, setTickets] = useState([])
 
-  const addMatch = () => {
-    if (!teamA.trim() || !teamB.trim()) {
-      alert('Please enter both team names.')
+  const addTicket = () => {
+    if (!trainNumber.trim() || !fromStation.trim() || !toStation.trim()) {
+      alert('Please fill in all fields.')
       return
     }
 
-    const newMatch = {
+    const newTicket = {
       id: Date.now(),
-      teamA,
-      teamB,
+      trainNumber,
+      fromStation,
+      toStation,
       date: new Date().toLocaleString(),
     }
 
-    setMatches([newMatch, ...matches])
-    setTeamA('')
-    setTeamB('')
+    setTickets([newTicket, ...tickets])
+    setTrainNumber('')
+    setFromStation('')
+    setToStation('')
   }
 
   return (
@@ -31,20 +34,25 @@ const App = () => {
       <div className="form-section">
         <input
           type="text"
-          placeholder="Team A"
-          value={teamA}
-          onChange={(e) => setTeamA(e.target.value)}
+          placeholder="Train Number"
+          value={trainNumber}
+          onChange={(e) => setTrainNumber(e.target.value)}
         />
-        <span className="vs">vs</span>
         <input
           type="text"
-          placeholder="Team B"
-          value={teamB}
-          onChange={(e) => setTeamB(e.target.value)}
+          placeholder="From Station"
+          value={fromStation}
+          onChange={(e) => setFromStation(e.target.value)}
         />
-        <button onClick={addMatch}>➕ Add Match</button>
+        <input
+          type="text"
+          placeholder="To Station"
+          value={toStation}
+          onChange={(e) => setToStation(e.target.value)}
+        />
+        <button onClick={addTicket}>➕ Add Ticket</button>
       </div>
-      <MatchList matches={matches} />
+      <TrainList tickets={tickets} />
     </div>
   )
 }
